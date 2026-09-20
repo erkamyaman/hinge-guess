@@ -4,12 +4,19 @@ Guess the hinge angle. The phone is the controller: fold it until you think you 
 
 Built with Ionic Angular, Capacitor and [`@erkamyaman/capacitor-foldable`](https://github.com/erkamyaman/capacitor-foldable). Runs on iPhone Duo (iOS 27.1 or later) and on Android foldables with a hinge sensor.
 
-| | |
-| --- | --- |
-| <img src="docs/images/meter.gif" width="440" alt="The needle following the hinge as the phone folds from flat to about 120 degrees and back"> | <img src="docs/images/game.gif" width="440" alt="A round of the game: a 60 degree target, the phone folded to it, then the measurement taken"> |
-| **Meter.** The needle follows the hinge live. The protractor's pivot sits on the crease, so the phone's own hinge is the instrument's. | **Game.** A round names a target. Fold to it, then take the measurement. |
-| <img src="docs/images/game-score.png" width="440" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to"> | <img src="docs/images/meter-flat.png" width="440" alt="The meter reading 180 degrees on a flat iPhone Duo"> |
-| The dashed arm shows where the phone actually was. | Flat at 180 degrees the instrument lies straight across both pages. |
+<p>
+  <img src="docs/images/meter.gif" width="49%" alt="The needle following the hinge as the phone folds from flat to about 120 degrees and back">
+  <img src="docs/images/game.gif" width="49%" alt="A round of the game: a 60 degree target, the phone folded to it, then the measurement taken">
+</p>
+
+**Meter** follows the hinge live. **Game** names a target to fold to, then scores the measurement. The protractor's pivot sits on the crease, so the phone's own hinge is the instrument's.
+
+<p>
+  <img src="docs/images/game-score.png" width="49%" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to">
+  <img src="docs/images/meter-flat.png" width="49%" alt="The meter reading 180 degrees on a flat iPhone Duo">
+</p>
+
+The dashed arm shows where the phone actually was. Flat at 180 degrees the instrument lies straight across both pages.
 
 ## How it plays
 
