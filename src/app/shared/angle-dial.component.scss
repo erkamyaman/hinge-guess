@@ -40,7 +40,7 @@ svg {
 .sweep {
   fill: none;
   stroke: var(--target);
-  stroke-width: 2.5;
+  stroke-width: 2;
   stroke-linecap: round;
   opacity: 0.75;
 
@@ -50,7 +50,7 @@ svg {
 }
 
 .arm {
-  stroke-width: 7;
+  stroke-width: 4.4;
   stroke-linecap: round;
   transform-box: view-box;
   transform-origin: 100px 100px;
@@ -71,7 +71,7 @@ svg {
 
 .actual {
   stroke: var(--signal);
-  stroke-width: 5;
+  stroke-width: 3.2;
   stroke-dasharray: 3 7;
   animation: needle 0.7s cubic-bezier(0.3, 0, 0.2, 1) both;
 }
