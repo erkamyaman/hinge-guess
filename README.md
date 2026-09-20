@@ -6,14 +6,12 @@ Built with Ionic Angular, Capacitor and [`@erkamyaman/capacitor-foldable`](https
 
 | | |
 | --- | --- |
-| <img src="docs/images/game-target.png" alt="The game showing a 130 degree target on a flat iPhone Duo"> | <img src="docs/images/game-score.png" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to"> |
-| A round names a target. The protractor's pivot sits on the crease, so the phone's own hinge is the instrument's. | Take the measurement and the dashed arm shows where the phone actually was. |
 | <img src="docs/images/meter-folded.png" alt="The meter reading 116.3 degrees on a folded iPhone Duo"> | <img src="docs/images/meter-flat.png" alt="The meter reading 180 degrees on a flat iPhone Duo"> |
-| The meter follows the hinge live, with no target to hit. | Flat at 180 degrees the instrument lies straight across both pages. |
+| The needle follows the hinge live. The protractor's pivot sits on the crease, so the phone's own hinge is the instrument's. | Flat at 180 degrees the instrument lies straight across both pages. |
+| <img src="docs/images/game-target.png" alt="The game showing a 130 degree target on a flat iPhone Duo"> | <img src="docs/images/game-score.png" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to"> |
+| A round names a target to fold to. | Take the measurement and the dashed arm shows where the phone actually was. |
 
-<video src="https://raw.githubusercontent.com/erkamyaman/hinge-guess/main/docs/videos/fold.mp4" controls muted playsinline width="640"></video>
-
-[The needle following a fold](docs/videos/fold.mp4), if the video does not play above.
+<img src="docs/images/fold.gif" width="620" alt="The needle following the hinge as the phone folds from flat to about 120 degrees and back">
 
 ## How it plays
 
