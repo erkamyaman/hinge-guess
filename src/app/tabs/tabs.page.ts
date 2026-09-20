@@ -1,17 +1,11 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, effect, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { NativeNavigation } from '@capgo/capacitor-native-navigation';
 import type { PluginListenerHandle } from '@capacitor/core';
-import { IonIcon } from '@ionic/angular/ion-icon';
-import { IonLabel } from '@ionic/angular/ion-label';
-import { IonTabBar } from '@ionic/angular/ion-tab-bar';
-import { IonTabButton } from '@ionic/angular/ion-tab-button';
-import { IonTabs } from '@ionic/angular/ion-tabs';
-import { addIcons } from 'ionicons';
 
+import { FreePage } from '../free/free.page';
+import { GamePage } from '../game/game.page';
 import { HingeService } from '../game/hinge.service';
-import { gameControllerOutline, speedometerOutline } from 'ionicons/icons';
 
 const ACTIVE = '#DB3E13';
 const INACTIVE = '#5C5F66';
@@ -49,11 +43,11 @@ const TABS = [
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  imports: [IonIcon, IonLabel, IonTabBar, IonTabButton, IonTabs],
+  styleUrls: ['tabs.page.scss'],
+  imports: [FreePage, GamePage],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsPage {
-  private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly hinge = inject(HingeService);
 
@@ -62,6 +56,9 @@ export class TabsPage {
 
   private listener: PluginListenerHandle | null = null;
   private readonly ready = signal(false);
+
+  /** Which view is on screen. */
+  readonly mode = signal<'game' | 'free'>('game');
   private applied: string | null = null;
 
   private async showTabs(visible: boolean): Promise<void> {
@@ -90,21 +87,20 @@ export class TabsPage {
   }
 
   /**
-   * The native bar has already moved its own selection by the time this runs,
-   * so only the route changes here. Re-sending the bar made it flash.
+   * Both modes are views of one instrument, so switching swaps the view in
+   * place. Routing between them meant mounting a lazy page on every tap, which
+   * showed as a blank frame and a sideways slide.
    */
-  private async switchTo(id: string): Promise<void> {
+  private switchTo(id: string): void {
     this.applied = id;
-    await this.router.navigate(['/tabs', id]);
+    this.mode.set(id === 'free' ? 'free' : 'game');
   }
 
   private currentTab(): string {
-    return this.router.url.includes('free') ? 'free' : 'game';
+    return this.mode();
   }
 
   constructor() {
-    addIcons({ gameControllerOutline, speedometerOutline });
-
     if (this.native) {
       void this.startNativeTabs();
 
@@ -128,7 +124,7 @@ export class TabsPage {
     this.ready.set(true);
 
     this.listener = await NativeNavigation.addListener('tabSelect', ({ id }) => {
-      void this.switchTo(id);
+      this.switchTo(id);
     });
   }
 }

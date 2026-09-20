@@ -1,0 +1,29 @@
+.modes {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 16px);
+  z-index: 20;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--body-hi);
+  box-shadow: 0 6px 18px rgb(31 33 36 / 18%);
+  transform: translateX(-50%);
+}
+
+.modes button {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 18px;
+  min-height: 40px;
+  font: inherit;
+  font-weight: 620;
+  color: var(--engrave-soft);
+  background: transparent;
+}
+
+.modes button.on {
+  color: var(--body-hi);
+  background: var(--engrave);
+}

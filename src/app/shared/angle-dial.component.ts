@@ -24,6 +24,27 @@ const pointAt = (degrees: number, radius: number) => {
   };
 };
 
+/**
+ * Where the arm was last seen, across every dial in the app. A dial coming
+ * into view carries on from there instead of snapping back to zero.
+ */
+let lastDrawn = 0;
+
+/**
+ * How long a move takes: a travel time per degree, settled by how far the arm
+ * has to go, the way a needle does. A nudge is quick, a sweep across the scale
+ * takes its time.
+ */
+const FOLLOW = 0.55;
+const TRAVEL = 1;
+
+const SETTLE_MS = 140;
+const MS_PER_DEGREE = 4.4;
+const LONGEST_MS = 900;
+
+const travelTime = (degrees: number, pace: number) =>
+  Math.min(LONGEST_MS, SETTLE_MS + Math.abs(degrees) * MS_PER_DEGREE * pace);
+
 const sweepPath = (degrees: number) => {
   const open = Math.max(0.01, Math.min(179.99, degrees));
   const start = pointAt(0, SWEEP);
@@ -51,7 +72,7 @@ export class AngleDialComponent {
   readonly armLength = ARM;
 
   /** What the dial draws right now: it sweeps to the angle rather than jumping. */
-  private readonly drawn = signal(0);
+  private readonly drawn = signal(lastDrawn);
   private frame = 0;
   private arrived = false;
 
@@ -66,22 +87,12 @@ export class AngleDialComponent {
       const live = this.kind() === 'live';
 
       untracked(() => {
-        // A live needle only sweeps on the way in, then it follows the hinge.
-        if (live && this.arrived) {
-          this.drawn.set(target);
-          return;
-        }
-
-        this.sweepTo(target, live ? 700 : 600);
+        // Arm and arc read the same value, so both move over the same time.
+        // A live needle follows the hinge closely; anything else takes the
+        // longer way round.
+        this.sweepTo(target, live && this.arrived ? FOLLOW : TRAVEL);
       });
     });
-  }
-
-  /** Sweep in from zero again, for instance when the page comes back. */
-  replay(): void {
-    this.arrived = false;
-    this.drawn.set(0);
-    this.sweepTo(this.angle(), 700);
   }
 
   readonly marks = computed(() =>
@@ -104,12 +115,18 @@ export class AngleDialComponent {
     return `M ${start.x} ${start.y} A ${SCALE} ${SCALE} 0 0 1 ${end.x} ${end.y}`;
   });
 
-  private sweepTo(target: number, duration: number): void {
+  private draw(degrees: number): void {
+    this.drawn.set(degrees);
+    lastDrawn = degrees;
+  }
+
+  private sweepTo(target: number, pace: number): void {
     cancelAnimationFrame(this.frame);
 
     const from = this.drawn();
+    const duration = travelTime(target - from, pace);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      this.drawn.set(target);
+      this.draw(target);
       this.arrived = true;
       return;
     }
@@ -118,7 +135,7 @@ export class AngleDialComponent {
     const step = (now: number) => {
       const progress = Math.min(1, (now - started) / duration);
       const eased = 1 - Math.pow(1 - progress, 3);
-      this.drawn.set(from + (target - from) * eased);
+      this.draw(from + (target - from) * eased);
       if (progress < 1) this.frame = requestAnimationFrame(step);
       else this.arrived = true;
     };

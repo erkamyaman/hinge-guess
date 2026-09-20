@@ -1,15 +1,12 @@
-<ion-tabs>
-  @if (!native) {
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="game" href="/tabs/game">
-        <ion-icon name="game-controller-outline" aria-hidden="true"></ion-icon>
-        <ion-label>Game</ion-label>
-      </ion-tab-button>
+@if (mode() === 'game') {
+  <app-game />
+} @else {
+  <app-free />
+}
 
-      <ion-tab-button tab="free" href="/tabs/free">
-        <ion-icon name="speedometer-outline" aria-hidden="true"></ion-icon>
-        <ion-label>Meter</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  }
-</ion-tabs>
+@if (!native) {
+  <nav class="modes">
+    <button type="button" [class.on]="mode() === 'game'" (click)="mode.set('game')">Game</button>
+    <button type="button" [class.on]="mode() === 'free'" (click)="mode.set('free')">Meter</button>
+  </nav>
+}

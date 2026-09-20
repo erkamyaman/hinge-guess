@@ -13,7 +13,12 @@ void installFoldablePolyfill({ ionicKeyboard: true });
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular({ mode: 'ios' }),
+    provideIonicAngular({
+      mode: 'ios',
+      // Tabs are two views of one instrument, so Ionic's page transitions only
+      // slide the layout sideways as it switches.
+      animated: false,
+    }),
     provideRouter(routes),
   ],
 }).catch((error: unknown) => console.error(error));
