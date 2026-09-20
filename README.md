@@ -2,16 +2,14 @@
 
 Guess the hinge angle. The phone is the controller: fold it until you think you have hit the target angle, then tap to score.
 
-<img src="docs/images/fold.gif" width="620" alt="The needle following the hinge as the phone folds from flat to about 120 degrees and back">
-
 Built with Ionic Angular, Capacitor and [`@erkamyaman/capacitor-foldable`](https://github.com/erkamyaman/capacitor-foldable). Runs on iPhone Duo (iOS 27.1 or later) and on Android foldables with a hinge sensor.
 
 | | |
 | --- | --- |
-| <img src="docs/images/meter-folded.png" alt="The meter reading 116.3 degrees on a folded iPhone Duo"> | <img src="docs/images/meter-flat.png" alt="The meter reading 180 degrees on a flat iPhone Duo"> |
-| The needle follows the hinge live. The protractor's pivot sits on the crease, so the phone's own hinge is the instrument's. | Flat at 180 degrees the instrument lies straight across both pages. |
-| <img src="docs/images/game-target.png" alt="The game showing a 130 degree target on a flat iPhone Duo"> | <img src="docs/images/game-score.png" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to"> |
-| A round names a target to fold to. | Take the measurement and the dashed arm shows where the phone actually was. |
+| <img src="docs/images/meter.gif" width="440" alt="The needle following the hinge as the phone folds from flat to about 120 degrees and back"> | <img src="docs/images/game.gif" width="440" alt="A round of the game: a 60 degree target, the phone folded to it, then the measurement taken"> |
+| **Meter.** The needle follows the hinge live. The protractor's pivot sits on the crease, so the phone's own hinge is the instrument's. | **Game.** A round names a target. Fold to it, then take the measurement. |
+| <img src="docs/images/game-score.png" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to"> | <img src="docs/images/meter-flat.png" alt="The meter reading 180 degrees on a flat iPhone Duo"> |
+| The dashed arm shows where the phone actually was. | Flat at 180 degrees the instrument lies straight across both pages. |
 
 ## How it plays
 
