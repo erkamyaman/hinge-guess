@@ -13,8 +13,8 @@ export const routes: Routes = [
         path: 'free',
         loadComponent: () => import('./free/free.page').then((m) => m.FreePage),
       },
-      { path: '', redirectTo: 'free', pathMatch: 'full' },
+      { path: '', redirectTo: 'game', pathMatch: 'full' },
     ],
   },
-  { path: '', redirectTo: 'tabs/free', pathMatch: 'full' },
+  { path: '', redirectTo: 'tabs/game', pathMatch: 'full' },
 ];

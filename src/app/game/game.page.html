@@ -1,33 +1,37 @@
 <ion-content [fullscreen]="true" class="screen">
   @if (!foldable() || liveAngle() === null) {
-    <section class="pane single">
-      <h1 class="goal">Guess the Angle</h1>
-      <p class="lead">This one needs a hinge. Open it on a Galaxy Z Fold, a Pixel Fold or an iPhone Duo.</p>
+    <section class="notice">
+      <h1>Needs a hinge</h1>
+      <p class="note">Open this on a Galaxy Z Fold, a Pixel Fold or an iPhone Duo and the phone becomes the controller.</p>
     </section>
   } @else if (!open()) {
     <app-unfold-prompt />
   } @else {
-    <main class="stage">
-      <section class="pane">
-        <h1 class="goal">Goal: {{ goal() }}°</h1>
-        <app-angle-dial [angle]="goal()" />
+    <main class="instrument">
+      <app-angle-dial class="dial" [angle]="goal()" [compare]="result()?.actual ?? null" />
+
+      <section class="page set">
+        @for (round of [level()]; track round) {
+          <div class="arrivals">
+            <p class="set-to">Set to {{ goal() }}°</p>
+            <p class="note">Fold the phone until it reads the angle, then take the measurement.</p>
+            <p class="tally">{{ tally() }}</p>
+          </div>
+        }
       </section>
 
-      <section class="pane">
+      <section class="page read">
         @if (result(); as round) {
-          <p class="accuracy">{{ round.accuracy }}%</p>
-          <p class="lead">accurate. You folded to {{ round.actual }}°.</p>
-          <p class="quote">"{{ round.quote }}"</p>
-          <ion-button expand="block" shape="round" size="large" (click)="next()">Again</ion-button>
+          <div class="arrivals">
+            <p class="reading" aria-live="polite">{{ shown() }}%</p>
+            <p class="verdict">{{ round.quote }}</p>
+            <p class="tally">You folded to {{ round.actual }}°, off by {{ round.error }}°</p>
+            <ion-button shape="round" size="default" (click)="next()">Next Angle</ion-button>
+          </div>
         } @else {
-          <p class="lead">Fold your phone to the goal, then guess.</p>
-          <ion-button expand="block" shape="round" size="large" (click)="guess()">Guess</ion-button>
-          <p class="stats">
-            level {{ level() }}
-            @if (averageAccuracy(); as average) {
-              · accuracy {{ average }}%
-            }
-          </p>
+          <div class="arrivals">
+            <ion-button shape="round" size="large" (click)="guess()">Measure</ion-button>
+          </div>
         }
       </section>
     </main>

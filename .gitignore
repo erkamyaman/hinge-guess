@@ -26,3 +26,9 @@ android/app/src/main/assets/public
 .idea
 .vscode/*
 !.vscode/extensions.json
+
+# agent skills installed locally
+.agents
+.claude
+.build
+skills-lock.json

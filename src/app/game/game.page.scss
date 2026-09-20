@@ -1,118 +1,191 @@
-:host {
-  --ink: #f3f6ff;
-  --muted: #8f99b8;
-  --accent: #6c8cff;
-}
-
+/*
+ * The instrument: the dial's pivot sits on the crease, so the phone's own
+ * hinge is the protractor's. Type and controls stay on one page or the other.
+ */
 .screen {
   --padding-top: 0;
   --padding-bottom: 0;
-  --background: radial-gradient(120% 90% at 18% 0%, #1d2a5e 0%, #0d1225 48%, #05060f 100%);
-  --color: var(--ink);
+  --background:
+    radial-gradient(120% 80% at 30% 0%, var(--body-hi) 0%, var(--body) 46%, var(--body-lo) 100%);
+  --color: var(--engrave);
 }
 
-.stage {
-  display: grid;
-  min-height: 100%;
-  grid-template-rows: 1fr 1fr;
+.instrument {
+  position: relative;
+  height: 100%;
 
-  &.single {
-    grid-template-rows: 1fr;
-    place-items: center;
+  /* Off a foldable the pivot has nothing to sit on, so centre it. */
+  --pivot-x: 50%;
+  --dial-size: min(84vh, 430px);
+}
+
+:host-context(.fold-vertical) .instrument {
+  --pivot-x: calc(var(--fold-left) + var(--fold-width) / 2);
+  --dial-size: min(104vh, 560px);
+}
+
+.dial {
+  position: absolute;
+  left: var(--pivot-x);
+  top: 56%;
+  width: var(--dial-size);
+  height: var(--dial-size);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.page {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 320px;
+  padding: 0 24px;
+}
+
+.page.set {
+  top: calc(env(safe-area-inset-top) + 26px);
+  left: calc(env(safe-area-inset-left) + 4px);
+}
+
+.page.read {
+  right: calc(env(safe-area-inset-right) + 4px);
+  bottom: calc(env(safe-area-inset-bottom) + 26px);
+  align-items: flex-end;
+  text-align: right;
+}
+
+:host-context(.fold-vertical) .page.read {
+  right: auto;
+  left: calc(var(--fold-left) + var(--fold-width) + 24px);
+  align-items: flex-start;
+  text-align: left;
+  padding-left: 0;
+}
+
+.reading {
+  margin: 0;
+  font-size: clamp(44px, 9vh, 76px);
+  font-weight: 640;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Anything that arrives, arrives the same way: line after line. */
+.arrivals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: inherit;
+}
+
+.arrivals > * {
+  animation: arrive 0.78s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.arrivals > :nth-child(2) { animation-delay: 170ms; }
+.arrivals > :nth-child(3) { animation-delay: 300ms; }
+.arrivals > :nth-child(4) { animation-delay: 430ms; }
+
+.pose {
+  margin: 0;
+  font-size: clamp(30px, 6vh, 46px);
+  font-weight: 640;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.set-to {
+  margin: 0;
+  font-size: clamp(30px, 6vh, 46px);
+  font-weight: 640;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--target);
+}
+
+.note {
+  margin: 0;
+  max-width: 26ch;
+  color: var(--engrave-soft);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.tally {
+  margin: 0;
+  color: var(--engrave-soft);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.verdict {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 560;
+}
+
+.miss {
+  color: var(--signal);
+}
+
+ion-button {
+  --background: var(--engrave);
+  --background-hover: #2f3238;
+  --background-focused: #2f3238;
+  --background-activated: #3a3d42;
+  --opacity: 1;
+  --color: var(--body-hi);
+  --color-activated: var(--body-hi);
+  --color-focused: var(--body-hi);
+  --ripple-color: var(--body-hi);
+  --border-radius: 6px;
+  --box-shadow: none;
+  --padding-start: 26px;
+  --padding-end: 26px;
+  margin: 4px 0 0;
+  min-height: 48px;
+  font-weight: 620;
+  letter-spacing: 0.01em;
+  text-transform: none;
+
+  &::part(native):focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
   }
 }
 
-/* Fold down the middle: angle on one side, controls on the other. */
-:host-context(.fold-vertical) .stage {
-  grid-template-rows: 1fr;
-  grid-template-columns: var(--fold-left) 1fr;
-  column-gap: var(--fold-width);
-}
-
-/* Fold across: angle above the crease, controls below. */
-:host-context(.fold-horizontal) .stage {
-  grid-template-rows: var(--fold-top) 1fr;
-  row-gap: var(--fold-height);
-}
-
-.pane.single {
-  min-height: 100%;
-}
-
-.pane {
+/* No hinge to read, or the phone is shut: one quiet column. */
+.notice {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  padding: 20px 22px;
+  gap: 12px;
+  height: 100%;
+  padding: 28px;
   text-align: center;
+}
 
-  > * {
-    width: 100%;
-    max-width: 300px;
+.notice h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 640;
+  letter-spacing: -0.03em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrivals > *,
+  :host ::ng-deep .arm {
+    animation: none;
+    transition: none;
   }
 }
 
-.goal {
-  margin: 0;
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.lead {
-  margin: 0;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.45;
-}
-
-.stats {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-}
-
-.quote {
-  margin: 0;
-  font-size: 17px;
-  font-style: italic;
-}
-
-.accuracy {
-  margin: 0;
-  font-size: 64px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  font-variant-numeric: tabular-nums;
-  animation: pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-ion-button {
-  --background: linear-gradient(135deg, #6c8cff, #8ba3ff);
-  --background-activated: #5a78e8;
-  --box-shadow: none;
-  --color: #080b16;
-  --border-radius: 999px;
-  margin: 0;
-  font-weight: 700;
-}
-
-@keyframes needle {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(var(--to)); }
-}
-
-@keyframes pop {
-  0% { opacity: 0; transform: translateY(8px) scale(0.88); }
+@keyframes arrive {
+  0% { opacity: 0; transform: translateY(14px) scale(0.985); }
+  60% { opacity: 1; }
   100% { opacity: 1; transform: none; }
-}
-
-@keyframes fold {
-  0%, 35% { transform: rotateY(-118deg); }
-  70%, 92% { transform: rotateY(0deg); }
-  100% { transform: rotateY(-118deg); }
 }

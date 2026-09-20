@@ -1,21 +1,38 @@
-<svg viewBox="0 0 220 140" role="img" [attr.aria-label]="angle() + ' degrees'">
-  <line class="arm base" [attr.x1]="pivot.x" [attr.y1]="pivot.y" [attr.x2]="pivot.x - armLength" [attr.y2]="pivot.y" />
+<svg viewBox="0 0 200 200" role="img" [attr.aria-label]="angle() + ' degrees'">
+  <path class="face" [attr.d]="scaleArc()" />
 
-  @if (kind() === 'live') {
+  @for (mark of marks(); track mark.degrees) {
     <line
-      class="arm live"
-      [style.transform]="'rotate(' + angle() + 'deg)'"
-      [attr.x1]="pivot.x" [attr.y1]="pivot.y" [attr.x2]="pivot.x - armLength" [attr.y2]="pivot.y"
+      class="mark"
+      [class.major]="mark.major"
+      [attr.x1]="mark.from.x" [attr.y1]="mark.from.y"
+      [attr.x2]="mark.to.x" [attr.y2]="mark.to.y"
     />
-  } @else {
-    @for (value of [angle()]; track value) {
-      <line
-        class="arm goal"
-        [style.--to]="value + 'deg'"
-        [attr.x1]="pivot.x" [attr.y1]="pivot.y" [attr.x2]="pivot.x - armLength" [attr.y2]="pivot.y"
-      />
+    @if (mark.numbered) {
+      <text class="figure" [attr.x]="mark.label.x" [attr.y]="mark.label.y">{{ mark.degrees }}</text>
     }
   }
 
-  <circle class="pivot" [attr.cx]="pivot.x" [attr.cy]="pivot.y" r="5" />
+  <path class="sweep" [class.live]="kind() === 'live'" [attr.d]="sweep()" />
+
+  <line class="arm base" [attr.x1]="pivot" [attr.y1]="pivot" [attr.x2]="pivot - armLength" [attr.y2]="pivot" />
+
+  <line
+    class="arm"
+    [class.live]="kind() === 'live'"
+    [class.goal]="kind() === 'goal'"
+    [style.transform]="'rotate(' + shown() + 'deg)'"
+    [attr.x1]="pivot" [attr.y1]="pivot" [attr.x2]="pivot - armLength" [attr.y2]="pivot"
+  />
+
+  @if (compare(); as actual) {
+    <line
+      class="arm actual"
+      [style.--to]="actual + 'deg'"
+      [attr.x1]="pivot" [attr.y1]="pivot" [attr.x2]="pivot - armLength" [attr.y2]="pivot"
+    />
+  }
+
+  <circle class="boss" [attr.cx]="pivot" [attr.cy]="pivot" r="7" />
+  <circle class="boss-pin" [attr.cx]="pivot" [attr.cy]="pivot" r="2.5" />
 </svg>

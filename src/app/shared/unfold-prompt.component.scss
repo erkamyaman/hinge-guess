@@ -25,7 +25,7 @@ h1 {
 p {
   margin: 0;
   max-width: 300px;
-  color: #8f99b8;
+  color: var(--engrave-soft);
   font-size: 15px;
   line-height: 1.45;
 }
@@ -36,14 +36,14 @@ p {
   place-items: center;
   width: 150px;
   height: 150px;
-  color: #a5b8ff;
+  color: var(--engrave);
 }
 
 .device {
   position: absolute;
   width: 118px;
   height: 118px;
-  filter: drop-shadow(0 10px 24px rgb(0 0 0 / 45%));
+  filter: drop-shadow(0 8px 18px rgb(31 33 36 / 22%));
   animation: swap 3.6s cubic-bezier(0.5, 0, 0.2, 1) infinite;
 }
 
@@ -61,4 +61,18 @@ p {
   0%, 34% { opacity: 0; transform: scale(0.88); }
   46%, 88% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.88); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .device {
+    animation: none;
+  }
+
+  .folded {
+    opacity: 1;
+  }
+
+  .open {
+    opacity: 0;
+  }
 }
