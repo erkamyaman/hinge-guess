@@ -8,7 +8,7 @@ Built with Ionic Angular, Capacitor and [`@erkamyaman/capacitor-foldable`](https
 | --- | --- |
 | <img src="docs/images/meter.gif" width="440" alt="The needle following the hinge as the phone folds from flat to about 120 degrees and back"> | <img src="docs/images/game.gif" width="440" alt="A round of the game: a 60 degree target, the phone folded to it, then the measurement taken"> |
 | **Meter.** The needle follows the hinge live. The protractor's pivot sits on the crease, so the phone's own hinge is the instrument's. | **Game.** A round names a target. Fold to it, then take the measurement. |
-| <img src="docs/images/game-score.png" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to"> | <img src="docs/images/meter-flat.png" alt="The meter reading 180 degrees on a flat iPhone Duo"> |
+| <img src="docs/images/game-score.png" width="440" alt="A scored round: 88 percent, with a dashed arm showing the angle the phone was folded to"> | <img src="docs/images/meter-flat.png" width="440" alt="The meter reading 180 degrees on a flat iPhone Duo"> |
 | The dashed arm shows where the phone actually was. | Flat at 180 degrees the instrument lies straight across both pages. |
 
 ## How it plays
