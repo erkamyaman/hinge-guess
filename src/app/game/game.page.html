@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true" class="screen">
+  @if (!foldable() || liveAngle() === null) {
+    <section class="pane single">
+      <h1 class="goal">Guess the Angle</h1>
+      <p class="lead">This one needs a hinge. Open it on a Galaxy Z Fold, a Pixel Fold or an iPhone Duo.</p>
+    </section>
+  } @else if (!open()) {
+    <app-unfold-prompt />
+  } @else {
+    <main class="stage">
+      <section class="pane">
+        <h1 class="goal">Goal: {{ goal() }}°</h1>
+        <app-angle-dial [angle]="goal()" />
+      </section>
+
+      <section class="pane">
+        @if (result(); as round) {
+          <p class="accuracy">{{ round.accuracy }}%</p>
+          <p class="lead">accurate. You folded to {{ round.actual }}°.</p>
+          <p class="quote">"{{ round.quote }}"</p>
+          <ion-button expand="block" shape="round" size="large" (click)="next()">Again</ion-button>
+        } @else {
+          <p class="lead">Fold your phone to the goal, then guess.</p>
+          <ion-button expand="block" shape="round" size="large" (click)="guess()">Guess</ion-button>
+          <p class="stats">
+            level {{ level() }}
+            @if (averageAccuracy(); as average) {
+              · accuracy {{ average }}%
+            }
+          </p>
+        }
+      </section>
+    </main>
+  }
+</ion-content>

@@ -1,0 +1,28 @@
+# node
+node_modules
+.angular
+
+# build output
+www
+dist
+
+# iOS
+ios/App/Pods
+ios/App/Podfile.lock
+ios/App/App/public
+ios/App/output
+DerivedData
+xcuserdata
+
+# Android
+android/app/build
+android/build
+android/.gradle
+android/local.properties
+android/app/src/main/assets/public
+
+# editors and OS
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json

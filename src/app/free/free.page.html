@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true" class="screen">
+  @if (!foldable() || liveAngle() === null) {
+    <section class="pane single">
+      <h1 class="goal">Free fold</h1>
+      <p class="lead">This one needs a hinge. Open it on a Galaxy Z Fold, a Pixel Fold or an iPhone Duo.</p>
+    </section>
+  } @else if (!open()) {
+    <app-unfold-prompt message="Free fold uses the inside screen." />
+  } @else {
+    <main class="stage">
+      <section class="pane">
+        <h1 class="goal">{{ pose() }}</h1>
+        <app-angle-dial [angle]="liveAngle() ?? 0" kind="live" />
+      </section>
+
+      <section class="pane">
+        <p class="accuracy">{{ liveAngle() | number: '1.0-0' }}°</p>
+        <p class="lead">Fold away. The angle follows you live.</p>
+        <p class="stats">updates {{ ticks() }}</p>
+      </section>
+    </main>
+  }
+</ion-content>

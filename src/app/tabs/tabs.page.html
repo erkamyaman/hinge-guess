@@ -1,0 +1,15 @@
+<ion-tabs>
+  @if (!native) {
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="game" href="/tabs/game">
+        <ion-icon name="game-controller-outline" aria-hidden="true"></ion-icon>
+        <ion-label>Game</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="free" href="/tabs/free">
+        <ion-icon name="speedometer-outline" aria-hidden="true"></ion-icon>
+        <ion-label>Meter</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  }
+</ion-tabs>

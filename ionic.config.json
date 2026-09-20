@@ -1,0 +1,7 @@
+{
+  "name": "hinge-guess",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

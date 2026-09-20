@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+svg {
+  width: 100%;
+  max-width: 220px;
+  max-height: 26vh;
+  margin: 0 auto;
+  display: block;
+}
+
+.arm {
+  stroke-width: 8;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 110px 118px;
+}
+
+.base {
+  stroke: rgb(255 255 255 / 45%);
+}
+
+.goal {
+  stroke: #6c8cff;
+  animation: needle 0.8s cubic-bezier(0.3, 0, 0.2, 1) both;
+}
+
+.live {
+  stroke: #4ade80;
+  transition: transform 0.12s linear;
+}
+
+.pivot {
+  fill: #f3f6ff;
+}
+
+@keyframes needle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(var(--to)); }
+}

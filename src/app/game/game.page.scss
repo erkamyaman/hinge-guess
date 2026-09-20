@@ -1,0 +1,118 @@
+:host {
+  --ink: #f3f6ff;
+  --muted: #8f99b8;
+  --accent: #6c8cff;
+}
+
+.screen {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --background: radial-gradient(120% 90% at 18% 0%, #1d2a5e 0%, #0d1225 48%, #05060f 100%);
+  --color: var(--ink);
+}
+
+.stage {
+  display: grid;
+  min-height: 100%;
+  grid-template-rows: 1fr 1fr;
+
+  &.single {
+    grid-template-rows: 1fr;
+    place-items: center;
+  }
+}
+
+/* Fold down the middle: angle on one side, controls on the other. */
+:host-context(.fold-vertical) .stage {
+  grid-template-rows: 1fr;
+  grid-template-columns: var(--fold-left) 1fr;
+  column-gap: var(--fold-width);
+}
+
+/* Fold across: angle above the crease, controls below. */
+:host-context(.fold-horizontal) .stage {
+  grid-template-rows: var(--fold-top) 1fr;
+  row-gap: var(--fold-height);
+}
+
+.pane.single {
+  min-height: 100%;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px 22px;
+  text-align: center;
+
+  > * {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.goal {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.stats {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.quote {
+  margin: 0;
+  font-size: 17px;
+  font-style: italic;
+}
+
+.accuracy {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  animation: pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+ion-button {
+  --background: linear-gradient(135deg, #6c8cff, #8ba3ff);
+  --background-activated: #5a78e8;
+  --box-shadow: none;
+  --color: #080b16;
+  --border-radius: 999px;
+  margin: 0;
+  font-weight: 700;
+}
+
+@keyframes needle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(var(--to)); }
+}
+
+@keyframes pop {
+  0% { opacity: 0; transform: translateY(8px) scale(0.88); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes fold {
+  0%, 35% { transform: rotateY(-118deg); }
+  70%, 92% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-118deg); }
+}

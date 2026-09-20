@@ -1,0 +1,21 @@
+<svg viewBox="0 0 220 140" role="img" [attr.aria-label]="angle() + ' degrees'">
+  <line class="arm base" [attr.x1]="pivot.x" [attr.y1]="pivot.y" [attr.x2]="pivot.x - armLength" [attr.y2]="pivot.y" />
+
+  @if (kind() === 'live') {
+    <line
+      class="arm live"
+      [style.transform]="'rotate(' + angle() + 'deg)'"
+      [attr.x1]="pivot.x" [attr.y1]="pivot.y" [attr.x2]="pivot.x - armLength" [attr.y2]="pivot.y"
+    />
+  } @else {
+    @for (value of [angle()]; track value) {
+      <line
+        class="arm goal"
+        [style.--to]="value + 'deg'"
+        [attr.x1]="pivot.x" [attr.y1]="pivot.y" [attr.x2]="pivot.x - armLength" [attr.y2]="pivot.y"
+      />
+    }
+  }
+
+  <circle class="pivot" [attr.cx]="pivot.x" [attr.cy]="pivot.y" r="5" />
+</svg>
