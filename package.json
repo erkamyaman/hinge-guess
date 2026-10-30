@@ -27,7 +27,7 @@
     "@capacitor/keyboard": "8.0.5",
     "@capacitor/status-bar": "8.0.3",
     "@capgo/capacitor-native-navigation": "^8.3.2",
-    "@erkamyaman/capacitor-foldable": "^8.2.0",
+    "@erkamyaman/capacitor-foldable": "^8.4.3",
     "@ionic/angular": "^9.0.0",
     "ionicons": "^8.1.0",
     "rxjs": "~7.8.0",
